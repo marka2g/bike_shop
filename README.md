@@ -1,18 +1,14 @@
-# BikeShop
+# BikesOfBurningMan BikeShop 
+__Demo BikeShop Built with Phoenix LiveView__
 
-To start your Phoenix server:
+![dialyxir check](https://github.com/marka2g/bike_shop/actions/workflows/dialyxir.yml/badge.svg)
+![tests passing](https://github.com/marka2g/bike_shop/actions/workflows/tests.yml/badge.svg)
+![security check](https://github.com/marka2g/bike_shop/actions/workflows/security.yml/badge.svg)
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+## Notable Dependencies
+>1. [credo](https://github.com/rrrene/credo) - static code analysis tool for Elixir
+>2. [dialyxir](https://github.com/jeremyjh/dialyxir) - elixir dialyxir
+>3. [excoveralls](https://github.com/parroty/excoveralls) - code coverage tool
+>4. [mix_test_watch](https://github.com/lpil/mix-test.watch) - continuous test runner
+>5. [libcluster](https://github.com/bitwalker/libcluster) - provides a mechanism for automatically forming clusters of Erlang nodes
