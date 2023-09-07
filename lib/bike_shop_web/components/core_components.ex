@@ -16,8 +16,8 @@ defmodule BikeShopWeb.CoreComponents do
   """
   use Phoenix.Component
 
-  alias Phoenix.LiveView.JS
   alias Phoenix.HTML.Form
+  alias Phoenix.LiveView.JS
   import BikeShopWeb.Gettext
 
   @doc """
