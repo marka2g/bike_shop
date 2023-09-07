@@ -27,7 +27,7 @@ defmodule BikeShopWeb.TopNavComponent do
           Source Code
         </a>
         <a
-          href={~p"/cart"}
+          href={~p"/"}
           class="flex p-4 ml-6 mr-2 transition bg-purple-600 rounded-full text-neutral-100 group hover:text-purple-600 hover:bg-purple-100"
         >
           <span class="text-xs"></span>
