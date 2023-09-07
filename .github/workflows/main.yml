@@ -117,8 +117,7 @@ jobs:
           mix deps.get
           mix ecto.create
       - name: Check Test Coverage
-        # run: mix coveralls.html
-        run: mix coveralls.github
+        run: mix coveralls.html
     services:
       pg:
         image: postgres:12
