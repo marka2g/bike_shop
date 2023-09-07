@@ -17,9 +17,14 @@ module.exports = {
         brand: "#FD4F00",
       }
     },
+    fontFamily: {
+      'sans': ["Rubik", "sans-serif"],
+      'serif': ["Roboto Slab", "serif"]
+    },
   },
   plugins: [
     require("@tailwindcss/forms"),
+    require('@tailwindcss/typography'),
     // Allows prefixing tailwind classes with LiveView classes to add rules
     // only when LiveView classes are applied, for example:
     //

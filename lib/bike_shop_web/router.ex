@@ -17,7 +17,7 @@ defmodule BikeShopWeb.Router do
   scope "/", BikeShopWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", ShopLive, :index
   end
 
   # Other scopes may use custom stacks.

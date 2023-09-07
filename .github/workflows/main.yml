@@ -116,8 +116,9 @@ jobs:
           mix local.hex --force
           mix deps.get
           mix ecto.create
-      - name: Check Coverage and Run Tests
-        run: mix coveralls.html
+      - name: Check Coverage
+        # run: mix coveralls.html
+        run: mix coveralls.github
     services:
       pg:
         image: postgres:12

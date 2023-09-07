@@ -1,0 +1,18 @@
+{
+  "skip_files": [
+    "lib/bike_shop/application.ex",
+    "lib/bike_shop_web.ex",
+    "lib/bike_shop_web/telemetry.ex",
+    "lib/bike_shop_web/router.ex",
+    "lib/bike_shop_web/views/error_helpers.ex",
+    "test/support/data_case.ex",
+    "lib/bike_shop_web/components/core_components.ex",
+    "lib/bike_shop_web/components/layouts.ex",
+    "lib/bike_shop/repo.ex",
+    "lib/bike_shop_web/controllers/error_html"
+  ],
+  "coverage_options": {
+    "treat_no_relevant_lines_as_covered": true,
+    "minimum_coverage": 95
+  }
+}
