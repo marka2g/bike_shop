@@ -11,5 +11,5 @@
         "priv/*/seeds.exs"
       ],
       &Path.wildcard(&1, match_dot: true)
-    ) -- [".scratch.ex", ".notes.ex"]
+    ) -- [".scratch.ex", ".notes.ex", "lib/bike_shop_web/components/core_components.ex"]
 ]
