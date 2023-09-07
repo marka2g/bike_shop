@@ -119,27 +119,6 @@ jobs:
       - name: Check Test Coverage
         # run: mix coveralls.html
         run: mix coveralls.github
-  run_tests:
-    - uses: actions/checkout@v3
-    - uses: erlef/setup-elixir@v1
-      with:
-        elixir-version: ${{ matrix.elixir }}
-        otp-version: ${{ matrix.otp }}
-    - uses: actions/cache@v3
-      id: mix-test-cache
-      with:
-        path: deps
-        key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles(format('{0}-{1}', github.workspace, '/mix.lock')) }} [Required] Define the Erlang/OTP version
-    - name: Restore dependencies cache
-      uses: actions/cache@v3
-      with:
-        path: deps
-        key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-        restore-keys: ${{ runner.os }}-mix-
-    - name: Install dependencies
-      run: mix deps.get
-    - name: Run tests
-      run: mix test
     services:
       pg:
         image: postgres:12
