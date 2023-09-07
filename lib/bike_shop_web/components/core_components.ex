@@ -16,9 +16,10 @@ defmodule BikeShopWeb.CoreComponents do
   """
   use Phoenix.Component
 
+  import BikeShopWeb.Gettext
+
   alias Phoenix.HTML.Form
   alias Phoenix.LiveView.JS
-  import BikeShopWeb.Gettext
 
   @doc """
   Renders a modal.

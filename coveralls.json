@@ -9,7 +9,8 @@
     "lib/bike_shop_web/components/core_components.ex",
     "lib/bike_shop_web/components/layouts.ex",
     "lib/bike_shop/repo.ex",
-    "lib/bike_shop_web/controllers/error_html"
+    "lib/bike_shop_web/controllers/error_html",
+    "lib/bike_shop_web/components/layouts/top_nav_component.ex"
   ],
   "coverage_options": {
     "treat_no_relevant_lines_as_covered": true,
