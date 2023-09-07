@@ -1,10 +1,7 @@
 # BikesOfBurningMan BikeShop 
 __Demo BikeShop Built with Phoenix LiveView__
 
-![dialyxir check](https://github.com/marka2g/bike_shop/actions/workflows/dialyxir.yml/badge.svg)
-![tests passing](https://github.com/marka2g/bike_shop/actions/workflows/tests.yml/badge.svg)
-![security check](https://github.com/marka2g/bike_shop/actions/workflows/security.yml/badge.svg)
-
+![build status](https://github.com/marka2g/bike_shop/actions/workflows/main.yml/badge.svg)
 
 ## Notable Dependencies
 >1. [credo](https://github.com/rrrene/credo) - static code analysis tool for Elixir
