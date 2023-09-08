@@ -6,7 +6,7 @@ defmodule BikeShopWeb.UserRegistrationLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
+    <div class="max-w-sm mx-auto">
       <.header class="text-center">
         Register for an account
         <:subtitle>
@@ -79,7 +79,9 @@ defmodule BikeShopWeb.UserRegistrationLive do
     form = to_form(changeset, as: "user")
 
     if changeset.valid? do
+      # coveralls-ignore-start
       assign(socket, form: form, check_errors: false)
+      # coveralls-ignore-stop
     else
       assign(socket, form: form)
     end

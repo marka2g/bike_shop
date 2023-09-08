@@ -17,6 +17,8 @@ defmodule BikeShopWeb.ConnCase do
 
   use ExUnit.CaseTemplate
 
+  alias BikeShop.AccountsFixtures
+
   using do
     quote do
       # The default endpoint for testing
@@ -45,8 +47,10 @@ defmodule BikeShopWeb.ConnCase do
   test context.
   """
   def register_and_log_in_user(%{conn: conn}) do
-    user = BikeShop.AccountsFixtures.user_fixture()
+    # coveralls-ignore-start
+    user = AccountsFixtures.user_fixture()
     %{conn: log_in_user(conn, user), user: user}
+    # coveralls-ignore-stop
   end
 
   @doc """

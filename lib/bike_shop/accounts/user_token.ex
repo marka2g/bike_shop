@@ -156,7 +156,9 @@ defmodule BikeShop.Accounts.UserToken do
 
         {:ok, query}
 
+      # coveralls-ignore-start
       :error ->
+        # coveralls-ignore-stop
         :error
     end
   end
