@@ -1,10 +1,11 @@
 defmodule BikeShopWeb.UserAuthTest do
   use BikeShopWeb.ConnCase, async: true
 
-  alias Phoenix.LiveView
+  import BikeShop.AccountsFixtures
+
   alias BikeShop.Accounts
   alias BikeShopWeb.UserAuth
-  import BikeShop.AccountsFixtures
+  alias Phoenix.LiveView
 
   @remember_me_cookie "_bike_shop_web_user_remember_me"
 

@@ -6,7 +6,7 @@ defmodule BikeShop.Accounts do
   import Ecto.Query, warn: false
   alias BikeShop.Repo
 
-  alias BikeShop.Accounts.{User, UserToken, UserNotifier}
+  alias BikeShop.Accounts.{User, UserNotifier, UserToken}
 
   ## Database getters
 
