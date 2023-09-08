@@ -1,0 +1,38 @@
+<.header>
+  Bike <%= @bike.id %>
+  <:subtitle>This is a bike record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/admin/bikes/#{@bike}/show/edit"} phx-click={JS.push_focus()}>
+      <button class="px-3 py-2 text-sm font-semibold rounded-lg phx-submit-loading:opacity-75 bg-sky-500 text-sky-50 hover:bg-sky-600 hover:text-sky-50">
+        Edit Bike
+      </button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @bike.name %></:item>
+  <:item title="Description"><%= @bike.description %></:item>
+  <:item title="Image url"><%= @bike.image_url %></:item>
+  <:item title="Price"><%= @bike.price %></:item>
+  <:item title="Seats"><%= @bike.seats %></:item>
+  <:item title="Type"><%= @bike.type %></:item>
+</.list>
+
+<.back navigate={~p"/admin/bikes"}>Back to bikes</.back>
+
+<.modal
+  :if={@live_action == :edit}
+  id="bike-modal"
+  show
+  on_cancel={JS.patch(~p"/admin/bikes/#{@bike}")}
+>
+  <.live_component
+    module={BikeForm}
+    id={@bike.id}
+    title={@page_title}
+    action={@live_action}
+    bike={@bike}
+    patch={~p"/admin/bikes/#{@bike}"}
+  />
+</.modal>

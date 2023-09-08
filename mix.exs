@@ -57,6 +57,7 @@ defmodule BikeShop.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
+      {:faker, "~> 0.17", only: [:test, :dev]},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.17.1"},
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
