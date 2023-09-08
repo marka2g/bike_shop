@@ -53,6 +53,13 @@ defmodule BikeShopWeb.ConnCase do
     # coveralls-ignore-stop
   end
 
+  def register_and_log_in_admin_user(%{conn: conn}) do
+    # coveralls-ignore-start
+    user = AccountsFixtures.admin_fixture()
+    %{conn: log_in_user(conn, user), user: user}
+    # coveralls-ignore-stop
+  end
+
   @doc """
   Logs the given `user` into the `conn`.
 

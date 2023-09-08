@@ -4,6 +4,8 @@ defmodule BikeShopWeb.Admin.BikeLive.Index.NameSearchTest do
   import Phoenix.LiveViewTest
 
   describe "test search_by_name" do
+    setup [:register_and_log_in_admin_user]
+
     test "with valid name", %{conn: conn} do
       {bike_1, bike_2} = create_bikes()
       {:ok, view, _html} = live(conn, ~p"/admin/bikes")

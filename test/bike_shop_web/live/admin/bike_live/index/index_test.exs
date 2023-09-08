@@ -1,8 +1,8 @@
 defmodule BikeShopWeb.Admin.BikeLive.IndexTest do
   use BikeShopWeb.ConnCase
 
-  import Phoenix.LiveViewTest
   import BikeShop.BikeFixtures
+  import Phoenix.LiveViewTest
 
   @create_attrs %{
     name: "some name",
@@ -28,7 +28,7 @@ defmodule BikeShopWeb.Admin.BikeLive.IndexTest do
   end
 
   describe "Index" do
-    setup [:create_bike]
+    setup [:create_bike, :register_and_log_in_admin_user]
 
     test "lists all bikes", %{conn: conn, bike: bike} do
       {:ok, _index_live, html} = live(conn, ~p"/admin/bikes")
@@ -123,7 +123,7 @@ defmodule BikeShopWeb.Admin.BikeLive.IndexTest do
   end
 
   describe "Show" do
-    setup [:create_bike]
+    setup [:create_bike, :register_and_log_in_admin_user]
 
     test "displays bike", %{conn: conn, bike: bike} do
       {:ok, _show_live, html} = live(conn, ~p"/admin/bikes/#{bike}")
