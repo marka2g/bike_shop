@@ -1,4 +1,4 @@
-defmodule BikeShopWeb.ShopLive.Bike do
+defmodule BikeShopWeb.ShopLive.BikeComponent do
   use BikeShopWeb, :live_component
 
   defp bike_details(assigns) do
@@ -22,8 +22,7 @@ defmodule BikeShopWeb.ShopLive.Bike do
         phx-target={@myself}
         class="px-6 py-1 text-purple-600 transition border-2 border-purple-600 rounded-full hover:bg-purple-600 hover:text-neutral-100"
       >
-        <span>+</span>
-        <span>add to cart</span>
+        <span>+ add to cart</span>
       </button>
     </div>
     """

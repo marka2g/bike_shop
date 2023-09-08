@@ -1,4 +1,4 @@
-defmodule BikeShop.BikesFixtures do
+defmodule BikeShop.BikeFixtures do
   @moduledoc """
   This module defines test helpers for creating
   entities via the `BikeShop.Bikes` context.
@@ -14,9 +14,9 @@ defmodule BikeShop.BikesFixtures do
         name: "some name",
         type: :pedal,
         description: "some description",
-        image_url: "some image_url",
+        image_url: "bike_1.jpg",
         price: 42,
-        seats: 42
+        seats: 1
       })
       |> BikeShop.Bikes.create_bike()
 

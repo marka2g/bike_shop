@@ -1,11 +1,25 @@
-defmodule BikeShopWeb.Admin.BikeLiveTest do
+defmodule BikeShopWeb.Admin.BikeLive.IndexTest do
   use BikeShopWeb.ConnCase
 
   import Phoenix.LiveViewTest
-  import BikeShop.BikesFixtures
+  import BikeShop.BikeFixtures
 
-  @create_attrs %{name: "some name", type: :pedal, description: "some description", image_url: "some image_url", price: 42, seats: 42}
-  @update_attrs %{name: "some updated name", type: :electric, description: "some updated description", image_url: "some updated image_url", price: 43, seats: 43}
+  @create_attrs %{
+    name: "some name",
+    type: :pedal,
+    description: "some description",
+    image_url: "some image_url",
+    price: %Money{amount: 42, currency: :USD},
+    seats: 42
+  }
+  @update_attrs %{
+    name: "some updated name",
+    type: :electric,
+    description: "some updated description",
+    image_url: "some updated image_url",
+    price: %Money{amount: 43, currency: :USD},
+    seats: 43
+  }
   @invalid_attrs %{name: nil, type: nil, description: nil, image_url: nil, price: nil, seats: nil}
 
   defp create_bike(_) do
@@ -26,14 +40,10 @@ defmodule BikeShopWeb.Admin.BikeLiveTest do
     test "saves new bike", %{conn: conn} do
       {:ok, index_live, _html} = live(conn, ~p"/admin/bikes")
 
-      assert index_live |> element("a", "New Bike") |> render_click() =~
-               "New Bike"
+      assert index_live |> element("a", "Add Bike +") |> render_click() =~
+               "Add Bike +"
 
       assert_patch(index_live, ~p"/admin/bikes/new")
-
-      assert index_live
-             |> form("#bike-form", bike: @invalid_attrs)
-             |> render_change() =~ "can&#39;t be blank"
 
       assert index_live
              |> form("#bike-form", bike: @create_attrs)
@@ -44,6 +54,41 @@ defmodule BikeShopWeb.Admin.BikeLiveTest do
       html = render(index_live)
       assert html =~ "Bike created successfully"
       assert html =~ "some name"
+    end
+
+    test "does not save invalid bike", %{conn: conn} do
+      {:ok, index_live, _html} = live(conn, ~p"/admin/bikes")
+
+      index_live
+      |> element("a", "Add Bike +")
+      |> render_click() =~ "Add Bike +"
+
+      assert_patch(index_live, ~p"/admin/bikes/new")
+
+      result =
+        index_live
+        |> form("#bike-form", %{bike: @invalid_attrs})
+        |> render_submit()
+
+      assert result =~ "New Bike"
+      assert result =~ "client-error"
+    end
+
+    test "does not update invalid bike", %{conn: conn, bike: bike} do
+      {:ok, index_live, _html} = live(conn, ~p"/admin/bikes")
+
+      assert index_live |> element("#bikes-#{bike.id} a", "Edit") |> render_click() =~
+               "Edit Bike"
+
+      assert_patch(index_live, ~p"/admin/bikes/#{bike}/edit")
+
+      result =
+        index_live
+        |> form("#bike-form", %{bike: @invalid_attrs})
+        |> render_submit()
+
+      assert result =~ "Edit Bike"
+      assert result =~ "client-error"
     end
 
     test "updates bike in listing", %{conn: conn, bike: bike} do

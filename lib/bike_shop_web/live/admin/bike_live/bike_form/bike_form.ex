@@ -68,21 +68,6 @@ defmodule BikeShopWeb.Admin.BikeLive.BikeForm do
     save_bike(socket, socket.assigns.action, bike_params)
   end
 
-  defp save_bike(socket, :edit, bike_params) do
-    case Bikes.update_bike(socket.assigns.bike, bike_params) do
-      {:ok, bike} ->
-        notify_parent({:saved, bike})
-
-        {:noreply,
-         socket
-         |> put_flash(:info, "Bike updated successfully")
-         |> push_patch(to: socket.assigns.patch)}
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign_form(socket, changeset)}
-    end
-  end
-
   defp save_bike(socket, :new, bike_params) do
     case Bikes.create_bike(bike_params) do
       {:ok, bike} ->
@@ -91,6 +76,21 @@ defmodule BikeShopWeb.Admin.BikeLive.BikeForm do
         {:noreply,
          socket
          |> put_flash(:info, "Bike created successfully")
+         |> push_patch(to: socket.assigns.patch)}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign_form(socket, changeset)}
+    end
+  end
+
+  defp save_bike(socket, :edit, bike_params) do
+    case Bikes.update_bike(socket.assigns.bike, bike_params) do
+      {:ok, bike} ->
+        notify_parent({:saved, bike})
+
+        {:noreply,
+         socket
+         |> put_flash(:info, "Bike updated successfully")
          |> push_patch(to: socket.assigns.patch)}
 
       {:error, %Ecto.Changeset{} = changeset} ->

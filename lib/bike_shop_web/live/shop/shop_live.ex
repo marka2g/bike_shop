@@ -1,7 +1,7 @@
 defmodule BikeShopWeb.ShopLive do
   use BikeShopWeb, :live_view
   alias BikeShop.Bikes
-  alias BikeShopWeb.ShopLive.Bike
+  alias BikeShopWeb.ShopLive.BikeComponent
 
   def mount(_params, _session, socket) do
     socket =

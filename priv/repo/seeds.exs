@@ -5,6 +5,6 @@ for _ <- 0..99 do
     name: Faker.Superhero.descriptor(),
     description: Faker.Superhero.name(),
     image_url: "bike_#{1..25 |> Enum.random()}.jpg",
-    price: :rand.uniform(10_000)
+    price: :rand.uniform(100_000)
   })
 end
