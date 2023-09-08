@@ -13,7 +13,10 @@
   </head>
   <body>
     <div class="mx-auto max-w-7xl">
-      <BikeShopWeb.TopNavComponent.menu request_path={@conn.request_path} />
+      <BikeShopWeb.TopNavComponent.menu
+        request_path={@conn.request_path}
+        current_user={@current_user}
+      />
       <%= @inner_content %>
     </div>
   </body>
