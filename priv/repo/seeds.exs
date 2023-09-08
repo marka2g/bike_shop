@@ -1,11 +1,10 @@
-# Script for populating the database. You can run it as:
-#
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     BikeShop.Repo.insert!(%BikeShop.SomeSchema{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+alias BikeShop.Bikes
+
+for _ <- 0..99 do
+  Bikes.create_bike(%{
+    name: Faker.Superhero.descriptor(),
+    description: Faker.Superhero.name(),
+    image_url: "bike_#{1..25 |> Enum.random()}.jpg",
+    price: :rand.uniform(10_000)
+  })
+end

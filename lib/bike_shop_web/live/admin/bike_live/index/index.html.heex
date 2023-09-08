@@ -1,0 +1,64 @@
+<.header class="mt-4">
+  Listing Bikes
+  <:actions>
+    <div class="flex items-center justify-between">
+      <.name_search name={@options.name} names={@names} />
+      <.link patch={~p"/admin/bikes/new"}>
+        <button class="px-3 py-2 text-sm font-semibold bg-green-600 rounded-lg phx-submit-loading:opacity-75 text-green-50 hover:bg-green-700 hover:text-green-50">
+          Add Bike +
+        </button>
+      </.link>
+    </div>
+  </:actions>
+</.header>
+
+<.table
+  id="bikes"
+  rows={@streams.bikes}
+  row_click={fn {_id, bike} -> JS.navigate(~p"/admin/bikes/#{bike}") end}
+>
+  <:col :let={{_id, bike}}>
+    <img src={"/images/#{bike.image_url}"} alt="" class="h-20 mx-auto mb-4 rounded-md" />
+  </:col>
+  <:col :let={{_id, bike}} label="Name"><%= bike.name %></:col>
+  <:col :let={{_id, bike}} label="Description"><%= bike.description %></:col>
+  <:col :let={{_id, bike}} label="Price"><%= bike.price %></:col>
+  <:col :let={{_id, bike}} label="Seats"><%= bike.seats %></:col>
+  <:col :let={{_id, bike}} label="Type"><%= bike.type %></:col>
+  <:action :let={{_id, bike}}>
+    <div class="sr-only">
+      <.link navigate={~p"/admin/bikes/#{bike}"}>Show</.link>
+    </div>
+    <.link patch={~p"/admin/bikes/#{bike}/edit"}>
+      <button class="px-3 py-2 text-sm font-semibold rounded-lg phx-submit-loading:opacity-75 bg-sky-500 text-sky-50 hover:bg-sky-600 hover:text-sky-50">
+        Edit
+      </button>
+    </.link>
+  </:action>
+  <:action :let={{id, bike}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: bike.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      <button class="px-3 py-2 text-sm font-semibold bg-red-500 rounded-lg phx-submit-loading:opacity-75 text-red-50 hover:bg-red-600 hover:text-red-50">
+        Delete
+      </button>
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="bike-modal"
+  show
+  on_cancel={JS.patch(~p"/admin/bikes")}
+>
+  <.live_component
+    module={BikeForm}
+    id={@bike.id || :new}
+    title={@page_title}
+    action={@live_action}
+    bike={@bike}
+    patch={~p"/admin/bikes"}
+  />
+</.modal>

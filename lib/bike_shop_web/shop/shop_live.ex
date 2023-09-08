@@ -1,22 +1,17 @@
 defmodule BikeShopWeb.ShopLive do
   use BikeShopWeb, :live_view
+  alias BikeShop.Bikes
+  alias BikeShopWeb.ShopLive.Bike
 
   def mount(_params, _session, socket) do
+    socket =
+      socket
+      |> list_bikes()
+
     {:ok, socket}
   end
 
-  def render(assigns) do
-    ~H"""
-    <div>
-      <section class="container py-8 mx-auto" data-role="all-bikes-section">
-        <h1 class="mb-8 text-lg font-bold">All Bikes</h1>
-        <div
-          class="grid justify-between grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-          id="bikes-list"
-        >
-        </div>
-      </section>
-    </div>
-    """
+  def list_bikes(socket) do
+    assign(socket, bikes: Bikes.list_bikes())
   end
 end

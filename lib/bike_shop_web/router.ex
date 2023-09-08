@@ -18,6 +18,15 @@ defmodule BikeShopWeb.Router do
     pipe_through :browser
 
     live "/", ShopLive, :index
+
+    scope "/admin", Admin, as: :admin do
+      live "/bikes", BikeLive.Index, :index
+      live "/bikes/new", BikeLive.Index, :new
+      live "/bikes/:id/edit", BikeLive.Index, :edit
+
+      live "/bikes/:id", BikeLive.Show, :show
+      live "/bikes/:id/show/edit", BikeLive.Show, :edit
+    end
   end
 
   # Other scopes may use custom stacks.
