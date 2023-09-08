@@ -28,6 +28,18 @@ defmodule BikeShopWeb.TopNavComponent do
         </a>
         <ul class="relative z-10 flex items-center justify-end gap-4 px-4 sm:px-6 lg:px-8">
           <%= if @current_user do %>
+            <%= if @current_user.role == :admin do %>
+              <li class="ml-6">
+                <.link href={~p"/admin/bikes"}>Admin Bikes</.link>
+              </li>
+              <li class="ml-6">
+                Admin Orders
+              </li>
+            <% else %>
+              <li class="ml-6">
+                My Orders
+              </li>
+            <% end %>
             <li class="text-[0.8125rem] leading-6 text-zinc-900">
               <%= @current_user.email %>
             </li>

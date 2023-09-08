@@ -21,15 +21,6 @@ defmodule BikeShopWeb.Router do
     pipe_through :browser
 
     live "/", ShopLive, :index
-
-    scope "/admin", Admin, as: :admin do
-      live "/bikes", BikeLive.Index, :index
-      live "/bikes/new", BikeLive.Index, :new
-      live "/bikes/:id/edit", BikeLive.Index, :edit
-
-      live "/bikes/:id", BikeLive.Show, :show
-      live "/bikes/:id/show/edit", BikeLive.Show, :edit
-    end
   end
 
   # Other scopes may use custom stacks.
@@ -77,6 +68,18 @@ defmodule BikeShopWeb.Router do
       on_mount: [{BikeShopWeb.UserAuth, :ensure_authenticated}] do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+    end
+
+    live_session :require_admin,
+      on_mount: [{BikeShopWeb.UserAuth, :ensure_authenticated}, BikeShopWeb.RequireAdmin] do
+      scope "/admin", Admin, as: :admin do
+        live "/bikes", BikeLive.Index, :index
+        live "/bikes/new", BikeLive.Index, :new
+        live "/bikes/:id/edit", BikeLive.Index, :edit
+
+        live "/bikes/:id", BikeLive.Show, :show
+        live "/bikes/:id/show/edit", BikeLive.Show, :edit
+      end
     end
   end
 
