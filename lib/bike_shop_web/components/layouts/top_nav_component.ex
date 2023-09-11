@@ -26,66 +26,67 @@ defmodule BikeShopWeb.TopNavComponent do
           </svg>
           Source Code
         </a>
-        <ul class="relative z-10 flex items-center justify-end gap-4 px-4 sm:px-6 lg:px-8">
-          <%= if @current_user do %>
-            <%= if @current_user.role == :admin do %>
-              <li class="ml-6">
-                <.link href={~p"/admin/bikes"}>Admin Bikes</.link>
-              </li>
-              <li class="ml-6">
-                Admin Orders
-              </li>
-            <% else %>
-              <li class="ml-6">
-                My Orders
-              </li>
-            <% end %>
-            <li class="text-[0.8125rem] leading-6 text-zinc-900">
-              <%= @current_user.email %>
+        <%!-- <ul class="relative z-10 flex items-center justify-end gap-4 px-4 sm:px-6 lg:px-8"> --%>
+        <%= if @current_user do %>
+          <%= if @current_user.role == :admin do %>
+            <li class="ml-6">
+              <.link href={~p"/admin/bikes"}>Admin Bikes</.link>
             </li>
-            <li>
-              <.link
-                href={~p"/users/settings"}
-                class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-              >
-                Settings
-              </.link>
-            </li>
-            <li>
-              <.link
-                href={~p"/users/log_out"}
-                method="delete"
-                class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-              >
-                Log out
-              </.link>
+            <li class="ml-6">
+              Admin Orders
             </li>
           <% else %>
-            <li>
-              <.link
-                href={~p"/users/register"}
-                class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-              >
-                Register
-              </.link>
-            </li>
-            <li>
-              <.link
-                href={~p"/users/log_in"}
-                class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-              >
-                Log in
-              </.link>
+            <li class="ml-6">
+              My Orders
             </li>
           <% end %>
-        </ul>
-        <a
-          href={~p"/"}
-          class="flex p-4 ml-6 mr-2 transition bg-purple-600 rounded-full text-neutral-100 group hover:text-purple-600 hover:bg-purple-100"
-        >
-          <span class="text-xs"></span>
-          <.icon name="hero-shopping-cart" class="w-5 h-5 stroke-current" />
-        </a>
+          <li class="px-2 text-[0.8125rem] leading-6 text-zinc-900">
+            <%= @current_user.email %>
+          </li>
+          <li>
+            <.link
+              href={~p"/users/settings"}
+              class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+            >
+              Settings
+            </.link>
+          </li>
+          <li>
+            <.link
+              href={~p"/users/log_out"}
+              method="delete"
+              class="px-2 text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+            >
+              Log out
+            </.link>
+          </li>
+        <% else %>
+          <li>
+            <.link
+              href={~p"/users/register"}
+              class="px-2 text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+            >
+              Register
+            </.link>
+          </li>
+          <li>
+            <.link
+              href={~p"/users/log_in"}
+              class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+            >
+              Log in
+            </.link>
+          </li>
+        <% end %>
+        <%= if !is_nil(@cart_id) do %>
+          <a
+            href={~p"/cart"}
+            class="flex p-4 ml-6 mr-2 transition bg-purple-600 rounded-full text-neutral-100 group hover:text-purple-600 hover:bg-purple-100"
+          >
+            <span class="text-xs"><%= BikeShop.Carts.get(@cart_id).total_quantity %></span>
+            <.icon name="hero-shopping-cart" class="w-5 h-5 stroke-current" />
+          </a>
+        <% end %>
       </ul>
     </nav>
     """

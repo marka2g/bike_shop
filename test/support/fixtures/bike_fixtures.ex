@@ -11,9 +11,9 @@ defmodule BikeShop.BikeFixtures do
     {:ok, bike} =
       attrs
       |> Enum.into(%{
-        name: "some name",
+        name: "Dummy Bike",
         type: :pedal,
-        description: "some description",
+        description: "Dummy Bike description",
         image_url: "bike_1.jpg",
         price: 42,
         seats: 1

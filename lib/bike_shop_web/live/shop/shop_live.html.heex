@@ -1,5 +1,4 @@
-<%!-- <div id="cart-session" phx-hook="CartSession"> --%>
-<div>
+<div id="cart-session" phx-hook="CartSession">
   <section class="container py-8 mx-auto" data-role="all-bikes-section">
     <h1 class="mb-8 text-lg font-bold">All Bikes</h1>
     <div
@@ -7,7 +6,13 @@
       data-role="bikes-list"
       id="bikes-list"
     >
-      <.live_component :for={bike <- @bikes} module={BikeComponent} id={bike.id} bike={bike} />
+      <.live_component
+        :for={bike <- @bikes}
+        module={BikeComponent}
+        id={bike.id}
+        bike={bike}
+        cart_id={@cart_id}
+      />
     </div>
   </section>
 </div>

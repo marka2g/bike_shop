@@ -4,6 +4,7 @@ defmodule BikeShop.Application do
   @moduledoc false
 
   use Application
+  alias BikeShop.Carts.Server.CartSessionServer
 
   @impl true
   def start(_type, _args) do
@@ -17,7 +18,8 @@ defmodule BikeShop.Application do
       # Start Finch
       {Finch, name: BikeShop.Finch},
       # Start the Endpoint (http/https)
-      BikeShopWeb.Endpoint
+      BikeShopWeb.Endpoint,
+      CartSessionServer
       # Start a worker by calling: BikeShop.Worker.start_link(arg)
       # {BikeShop.Worker, arg}
     ]

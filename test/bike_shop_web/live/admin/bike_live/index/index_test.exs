@@ -1,17 +1,9 @@
 defmodule BikeShopWeb.Admin.BikeLive.IndexTest do
   use BikeShopWeb.ConnCase
 
-  import BikeShop.BikeFixtures
   import Phoenix.LiveViewTest
+  import BikeShop.BikeFixtures
 
-  @create_attrs %{
-    name: "some name",
-    type: :pedal,
-    description: "some description",
-    image_url: "some image_url",
-    price: %Money{amount: 42, currency: :USD},
-    seats: 42
-  }
   @update_attrs %{
     name: "some updated name",
     type: :electric,
@@ -46,7 +38,16 @@ defmodule BikeShopWeb.Admin.BikeLive.IndexTest do
       assert_patch(index_live, ~p"/admin/bikes/new")
 
       assert index_live
-             |> form("#bike-form", bike: @create_attrs)
+             |> form("#bike-form",
+               bike: %{
+                 name: "some name",
+                 type: :electric,
+                 description: "some name description",
+                 image_url: "some name image_url",
+                 price: %Money{amount: 43, currency: :USD},
+                 seats: 43
+               }
+             )
              |> render_submit()
 
       assert_patch(index_live, ~p"/admin/bikes")

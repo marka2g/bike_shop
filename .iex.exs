@@ -23,3 +23,8 @@ IEx.configure(
 
 alias BikeShop.Accounts
 alias BikeShop.Bikes
+alias BikeShop.Carts
+alias BikeShop.Carts.Core.HandleCarts
+alias BikeShop.Carts.Data.Cart
+alias BikeShop.Carts.Server.CartSessionServer
+alias BikeShopWeb.Middleware.CartSession
