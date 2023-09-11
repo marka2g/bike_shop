@@ -1,5 +1,23 @@
 defmodule BikeShopWeb.ShopLive.BikeComponent do
   use BikeShopWeb, :live_component
+  alias BikeShop.Carts
+
+  def handle_event("add", _, socket) do
+    bike = socket.assigns.bike
+    cart_id = socket.assigns.cart_id
+    add_bike_to_cart(cart_id, bike)
+
+    {:noreply,
+     socket
+     |> put_flash(:info, "#{bike.name} added to cart")
+     |> push_redirect(to: "/")}
+  end
+
+  defp add_bike_to_cart(cart_id, bike) do
+    Carts.add(cart_id, bike)
+    # cart = Carts.get(cart_id)
+    # send(self(), {:update_cart, cart})
+  end
 
   defp bike_details(assigns) do
     ~H"""

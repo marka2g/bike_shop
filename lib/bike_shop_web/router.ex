@@ -3,6 +3,8 @@ defmodule BikeShopWeb.Router do
 
   import BikeShopWeb.UserAuth
 
+  alias BikeShopWeb.Middleware.CartSession
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -20,7 +22,10 @@ defmodule BikeShopWeb.Router do
   scope "/", BikeShopWeb do
     pipe_through :browser
 
-    live "/", ShopLive, :index
+    live_session :create_cart_session, on_mount: CartSession do
+      live "/", ShopLive, :index
+      live "/cart", CartLive, :index
+    end
   end
 
   # Other scopes may use custom stacks.
@@ -68,6 +73,11 @@ defmodule BikeShopWeb.Router do
       on_mount: [{BikeShopWeb.UserAuth, :ensure_authenticated}] do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+
+      scope "/customer", Customer, as: :customer do
+        live "/orders", OrderLive.Index, :index
+        live "/orders/:id", OrderLive.Status, :status
+      end
     end
 
     live_session :require_admin,
