@@ -80,19 +80,19 @@ defmodule BikeShop.Carts.Core.HandleCarts do
   def dec(%{items: items} = cart, item_id) do
     {items_updated, item} =
       Enum.reduce(items, {[], nil}, fn item_detail, acc ->
-        {items_list, item} = acc
+        {list, item} = acc
 
         if item_detail.item.id == item_id do
           updated_item = %{item_detail | quantity: item_detail.quantity - 1}
 
-          if updated_item == 0 do
-            {items_list, updated_item}
+          if updated_item.quantity == 0 do
+            {list, updated_item}
           else
             item_updated = [updated_item]
-            {items_list ++ item_updated, updated_item}
+            {list ++ item_updated, updated_item}
           end
         else
-          {[item_detail] ++ items_list, item}
+          {[item_detail] ++ list, item}
         end
       end)
 
