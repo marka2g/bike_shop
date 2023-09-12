@@ -38,7 +38,7 @@ defmodule BikeShopWeb.ShopLive.BikeComponent do
       <button
         phx-click="add"
         phx-target={@myself}
-        class="px-6 py-1 text-purple-600 transition border-2 border-purple-600 rounded-full hover:bg-purple-600 hover:text-neutral-100"
+        class="px-6 py-1 text-purple-500 transition border-2 border-purple-600 rounded-full hover:bg-purple-600 hover:text-neutral-100"
       >
         <span>+ add to cart</span>
       </button>

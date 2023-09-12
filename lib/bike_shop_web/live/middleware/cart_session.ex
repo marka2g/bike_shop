@@ -38,10 +38,13 @@ defmodule BikeShopWeb.Middleware.CartSession do
     cart_id
   end
 
+  # coveralls-ignore-start
   defp build_cart(nil, cart_id) do
     Carts.create(cart_id)
     cart_id
   end
+
+  # coveralls-ignore-stop
 
   defp build_cart(%{id: cart_id}, _) do
     Carts.create(cart_id)

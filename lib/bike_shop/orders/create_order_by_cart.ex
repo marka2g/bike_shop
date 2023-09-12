@@ -15,7 +15,7 @@ defmodule BikeShop.Orders.CreateOrderByCart do
   end
 
   defp convert_cart_to_payload_item(%{items: items} = cart) do
-    payload_items = Enum.map(items, &%{quantity: &1.quantity, product_id: &1.item.id})
+    payload_items = Enum.map(items, &%{quantity: &1.quantity, bike_id: &1.item.id})
     {cart, payload_items}
   end
 

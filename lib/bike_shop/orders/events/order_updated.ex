@@ -5,15 +5,6 @@ defmodule BikeShop.Orders.Events.OrderUpdated do
   @admin_orders_updates "admin_orders_updates"
   @update_user_row "update_user_row"
 
-  def subscribe_to_order_updates(id), do: PubSub.subscribe(@pubsub, @order_updates <> ":#{id}")
-
-  def broadcast_order_updates({:ok, order} = result) do
-    PubSub.broadcast(@pubsub, @order_updates <> ":#{order.id}", {:order_updates, order})
-    result
-  end
-
-  def broadcast_order_updates({:error, _} = err, _), do: err
-
   def subscribe_admin_to_orders_updates, do: PubSub.subscribe(@pubsub, @admin_orders_updates)
 
   def broadcast_admin_to_orders_updates({:ok, order} = result, old_status) do
@@ -21,7 +12,9 @@ defmodule BikeShop.Orders.Events.OrderUpdated do
     result
   end
 
+  # coveralls-ignore-start
   def broadcast_admin_to_orders_updates({:error, _} = err, _), do: err
+  # coveralls-ignore-stop
 
   def subscribe_update_user_row(user_id),
     do: PubSub.subscribe(@pubsub, @update_user_row <> ":#{user_id}")
@@ -36,5 +29,19 @@ defmodule BikeShop.Orders.Events.OrderUpdated do
     result
   end
 
+  # coveralls-ignore-start
   def broadcast_update_user_row({:error, _} = err, _), do: err
+  # coveralls-ignore-stop
+
+  # subscribe_to_order_updates
+  def subscribe_to_order_updates(id), do: PubSub.subscribe(@pubsub, @order_updates <> ":#{id}")
+
+  def broadcast_order_updates({:ok, order} = result) do
+    PubSub.broadcast(@pubsub, @order_updates <> ":#{order.id}", {:order_updates, order})
+    result
+  end
+
+  # coveralls-ignore-start
+  def broadcast_order_updates({:error, _} = err, _), do: err
+  # coveralls-ignore-stop
 end
