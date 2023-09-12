@@ -2,6 +2,7 @@ defmodule BikeShop.Orders do
   alias __MODULE__.Events.{Order, OrderCreated, OrderUpdated}
 
   alias __MODULE__.{
+    Order,
     AllOrderStatuses,
     CreateOrderByCart,
     GetOrderByIdAndCustomerId,

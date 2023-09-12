@@ -33,11 +33,14 @@ defmodule BikeShopWeb.TopNavComponent do
               <.link href={~p"/admin/bikes"}>Admin Bikes</.link>
             </li>
             <li class="ml-6">
-              Admin Orders
+              <.link href={~p"/admin/orders"}>Admin Orders</.link>
+            </li>
+            <li class="ml-6">
+              <.link href={~p"/customer/orders"}>My Orders</.link>
             </li>
           <% else %>
             <li class="ml-6">
-              My Orders
+              <.link href={~p"/customer/orders"}>My Orders</.link>
             </li>
           <% end %>
           <li class="px-2 text-[0.8125rem] leading-6 text-zinc-900">

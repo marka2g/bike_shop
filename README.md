@@ -9,3 +9,8 @@ __Demo BikeShop Built with Phoenix LiveView__
 >3. [excoveralls](https://github.com/parroty/excoveralls) - code coverage tool
 >4. [mix_test_watch](https://github.com/lpil/mix-test.watch) - continuous test runner
 >5. [libcluster](https://github.com/bitwalker/libcluster) - provides a mechanism for automatically forming clusters of Erlang nodes
+
+
+## ToDo
+
+-[ ] cart icon quantity - `handle_info` update cart isn't working.  may need pub/sub

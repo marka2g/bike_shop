@@ -75,14 +75,16 @@ defmodule BikeShopWeb.Router do
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
 
       scope "/customer", Customer, as: :customer do
-        live "/orders", OrderLive.Index, :index
-        live "/orders/:id", OrderLive.Status, :status
+        live "/orders", OrdersLive.Index, :index
+        live "/orders/:id", OrdersLive.Status, :status
       end
     end
 
     live_session :require_admin,
       on_mount: [{BikeShopWeb.UserAuth, :ensure_authenticated}, BikeShopWeb.RequireAdmin] do
       scope "/admin", Admin, as: :admin do
+        live "/orders", OrderLive.Index, :index
+
         live "/bikes", BikeLive.Index, :index
         live "/bikes/new", BikeLive.Index, :new
         live "/bikes/:id/edit", BikeLive.Index, :edit

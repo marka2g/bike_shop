@@ -2,7 +2,7 @@ defmodule BikeShop.Carts.Server.CartSessionServer do
   use GenServer
   import BikeShop.Carts.Core.HandleCarts
 
-  @name :cart_session
+  @name :cart_session_server
 
   def start_link(_) do
     GenServer.start_link(__MODULE__, @name, name: @name)

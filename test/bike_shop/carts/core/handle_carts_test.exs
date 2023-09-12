@@ -115,7 +115,7 @@ defmodule BikeShop.Carts.Core.HandleCartsTest do
       assert 0 == cart.total_quantity
       ## wtf - fix this
       # IO.inspect(cart.items, label: "cart.items")
-      # assert [] == cart.items
+      assert [] == cart.items
       assert Money.new(0) == cart.total_price
     end
   end

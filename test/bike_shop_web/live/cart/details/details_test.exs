@@ -18,18 +18,18 @@ defmodule BikeShopWeb.Cart.DetailsTest do
       |> add(bike_element, conn)
       |> add(bike_2_element, conn)
 
-      {:ok, _view, _html} = live(conn, ~p"/cart")
+      {:ok, view, _html} = live(conn, ~p"/cart")
 
-      # {:ok, _view, html} =
-      #   view
-      #   |> form("#confirm-order-form", %{
-      #     "phone_number" => "11231312312",
-      #     "address" => "Abc street"
-      #   })
-      #   |> render_submit()
-      #   |> follow_redirect(conn, ~p"/customer/orders")
+      {:ok, _view, html} =
+        view
+        |> form("#confirm-order-form", %{
+          "phone_number" => "11231312312",
+          "address" => "Abc street"
+        })
+        |> render_submit()
+        |> follow_redirect(conn, ~p"/customer/orders")
 
-      # assert html =~ "hi"
+      assert html =~ "hi"
     end
 
     test "error trying to create an order", %{conn: conn} do
@@ -44,13 +44,13 @@ defmodule BikeShopWeb.Cart.DetailsTest do
       |> add(bike_element, conn)
       |> add(bike_2_element, conn)
 
-      {:ok, _view, _html} = live(conn, ~p"/cart")
+      {:ok, view, _html} = live(conn, ~p"/cart")
 
-      # {:ok, _view, _html} =
-      #   view
-      #   |> form("#confirm-order-form", %{})
-      #   |> render_submit()
-      #   |> follow_redirect(conn, ~p"/cart")
+      {:ok, _view, _html} =
+        view
+        |> form("#confirm-order-form", %{})
+        |> render_submit()
+        |> follow_redirect(conn, ~p"/cart")
     end
   end
 

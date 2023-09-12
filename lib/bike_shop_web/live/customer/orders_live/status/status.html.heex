@@ -1,0 +1,31 @@
+<section class="min-h-screen bg-grau-100">
+  <.back navigate={~p"/customer/orders"}>Back to orders</.back>
+
+  <div class="m-8">
+    <div class="flex items-center justify-between mb-12">
+      <h1 class="text-xl font-bold">Track Delivery status</h1>
+      <h6 class="py-2 pl-2 pr-2 text-xs text-green-500 rounded-full bg-neutral-200">
+        Order: <%= @order.id %>
+      </h6>
+    </div>
+
+    <ul>
+      <li
+        :for={{status, index} <- @status_list}
+        id={status}
+        class={[index <= @status_list[@order.status] && "text-purple-500", "text-sm md:text-xl"]}
+      >
+        <div class="flex items-center">
+          <.get_icon status={status} />
+          <span class="pl-2"><%= humanize(status) %></span>
+        </div>
+        <div class={[
+          index <= @status_list[@order.status] && "border-purple-500",
+          (status == :delivered && "h-0") || "h-14",
+          "relative border-l-4 left-4 my-2"
+        ]}>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>

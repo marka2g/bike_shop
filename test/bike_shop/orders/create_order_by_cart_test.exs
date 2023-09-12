@@ -17,16 +17,15 @@ defmodule BikeShop.Orders.CreateOrderByCartTest do
 
       assert 1 == Carts.get(user.id).total_quantity
 
-      # payload = %{
-      #   "address" => "123",
-      #   "current_user" => user.id,
-      #   "phone_number" => "123"
-      # }
+      payload = %{
+        "address" => "123",
+        "current_user" => user.id,
+        "phone_number" => "123"
+      }
 
-      # IO.inspect(CreateOrderByCart.execute(payload), label: "CreateOrderByCart.execute(payload)")
-      # {:ok, result} = CreateOrderByCart.execute(payload)
+      {:ok, result} = CreateOrderByCart.execute(payload)
 
-      # assert 1 == result.total_quantity
+      assert 1 == result.total_quantity
     end
 
     test "error" do
