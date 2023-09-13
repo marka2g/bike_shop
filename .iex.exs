@@ -21,6 +21,8 @@ IEx.configure(
     |> IO.chardata_to_string()
 )
 
+import Ecto.Query, warn: false
+
 alias BikeShop.Accounts
 alias BikeShop.Bikes
 alias BikeShop.Carts
@@ -28,5 +30,4 @@ alias BikeShop.Carts.Core.HandleCarts
 alias BikeShop.Carts.Data.Cart
 alias BikeShop.Carts.Server.CartSessionServer
 alias BikeShop.Orders
-alias BikeShop.Orders.Order
 alias BikeShopWeb.Middleware.CartSession
