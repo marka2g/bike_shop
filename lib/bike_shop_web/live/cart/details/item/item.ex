@@ -5,12 +5,7 @@ defmodule BikeShopWeb.Cart.Details.Item do
   def render(assigns) do
     ~H"""
     <div id={@id} data-role="item" class="flex items-center p-2 my-8 shadow-lg hover:bg-neutral-100">
-      <img
-        data-role="item-image"
-        src={@item.item.image_url}
-        alt=""
-        class="w-16 h-16 rounded-full"
-      />
+      <img data-role="item-image" src={@item.item.image_url} alt="" class="w-16 h-16 rounded-full" />
       <div class="flex-1 ml-4">
         <h1><%= @item.item.name %></h1>
         <span><%= @item.item.type %></span>

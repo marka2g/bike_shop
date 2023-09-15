@@ -22,5 +22,6 @@ defmodule BikeShop do
   defp default_uploads_dir do
     Path.join([:code.priv_dir(:bike_shop), "static", "uploads"])
   end
+
   # coveralls-ignore-stop
 end

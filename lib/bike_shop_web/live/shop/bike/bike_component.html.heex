@@ -4,11 +4,7 @@
   id={@bike.id}
   class="p-4 mb-2 rounded-lg shadow-lg hover:bg-neutral-100"
 >
-  <img 
-    src={@bike.image_url}
-    alt={"#{@bike.name}"} 
-    class="h-40 mx-auto mb-4"
-  />
+  <img src={@bike.image_url} alt={"#{@bike.name}"} class="h-40 mx-auto mb-4" />
 
   <div class="text-center" data-role="bike-details" data-id={@bike.id}>
     <.bike_details name={@bike.name} seats={@bike.seats} type={@bike.type} />

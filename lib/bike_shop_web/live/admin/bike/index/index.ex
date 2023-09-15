@@ -31,6 +31,7 @@ defmodule BikeShopWeb.Admin.BikeLive.Index do
     socket
     |> assign(:page_title, "Edit Bike")
     |> assign(:bike, Bikes.get_bike!(id))
+
     # coveralls-ignore-stop
   end
 
@@ -50,6 +51,7 @@ defmodule BikeShopWeb.Admin.BikeLive.Index do
   def handle_info({BikeForm, {:saved, bike}}, socket) do
     {:noreply, stream_insert(socket, :bikes, bike)}
   end
+
   # coveralls-ignore-stop
 
   def handle_info({:list_bike, name}, socket) do

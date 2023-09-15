@@ -30,6 +30,7 @@ defmodule BikeUploadConfig do
       Path.join(s3_url(), filename(entry))
     end
   end
+
   # coveralls-ignore-stop
 
   # coveralls-ignore-start
@@ -43,6 +44,7 @@ defmodule BikeUploadConfig do
       {:ok, ""}
     end
   end
+
   # coveralls-ignore-start
 
   # coveralls-ignore-start
@@ -51,6 +53,7 @@ defmodule BikeUploadConfig do
     region = System.fetch_env!("AWS_REGION")
     "http://#{bucket}.s3-#{region}.amazonaws.com"
   end
+
   # coveralls-ignore-stop
 
   # coveralls-ignore-start
@@ -82,6 +85,7 @@ defmodule BikeUploadConfig do
 
     {:ok, meta, socket}
   end
+
   # coveralls-ignore-stop
 
   # coveralls-ignore-start
@@ -89,5 +93,6 @@ defmodule BikeUploadConfig do
     [ext | _] = MIME.extensions(entry.client_type)
     "#{@bike_images_folder}/#{entry.uuid}.#{ext}"
   end
+
   # coveralls-ignore-start
 end

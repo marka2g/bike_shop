@@ -29,6 +29,7 @@ defmodule BikeShopWeb.Admin.BikeLive.BikeForm do
   def handle_event("validate", _params, socket) do
     {:noreply, socket}
   end
+
   # coveralls-ignore-stop
 
   def handle_event("save", %{"bike" => bike_params}, socket) do
@@ -80,7 +81,8 @@ defmodule BikeShopWeb.Admin.BikeLive.BikeForm do
           socket
           |> put_flash(:info, message)
           |> push_navigate(to: socket.assigns.navigate)
-          # |> push_patch(to: socket.assigns.patch)
+
+        # |> push_patch(to: socket.assigns.patch)
 
         {:noreply, socket}
 
@@ -89,6 +91,7 @@ defmodule BikeShopWeb.Admin.BikeLive.BikeForm do
         # {:noreply, assign_form(socket, changeset)}
     end
   end
+
   # coveralls-ignore-stop
 
   defp build_image_url(socket) do

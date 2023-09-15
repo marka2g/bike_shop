@@ -27,12 +27,14 @@
       <.header>
         Bike's Current Image
       </.header>
-      <article
-        :if={@bike}
-        class="flex items-center justify-between"
-      >
+      <article :if={@bike} class="flex items-center justify-between">
         <figure class="flex flex-col items-center justify-between p-4 rounded-md bg-slate-200">
-          <img src={@bike.image_url} alt="" class="w-16 h-16 rounded-md" data-role="edit-image-preview">
+          <img
+            src={@bike.image_url}
+            alt=""
+            class="w-16 h-16 rounded-md"
+            data-role="edit-image-preview"
+          />
           <figcaption class="text-purple-800"><%= @bike.name %></figcaption>
         </figure>
         <%!-- <button 
@@ -49,7 +51,10 @@
     <.header>
       Add Bike Image(s)
     </.header>
-    <div class="container h-48 p-4 border-2 border-purple-600 border-dashed rounded-lg" phx-drop-target={@uploads.image_url.ref}>
+    <div
+      class="container h-48 p-4 border-2 border-purple-600 border-dashed rounded-lg"
+      phx-drop-target={@uploads.image_url.ref}
+    >
       <.live_file_input upload={@uploads.image_url} /> or drag and drop
     </div>
 
@@ -64,12 +69,15 @@
       <p :for={err <- upload_errors(@uploads.image_url)} class="font-semibold text-red-500">
         <%= humanize(err) %>
       </p>
-      
-      <figure :for={entry <- @uploads.image_url.entries} class="p-4 mb-2 space-y-2 rounded-md bg-slate-200">
+
+      <figure
+        :for={entry <- @uploads.image_url.entries}
+        class="p-4 mb-2 space-y-2 rounded-md bg-slate-200"
+      >
         <div class="text-right">
           <button
             type="button"
-            phx-target={@myself} 
+            phx-target={@myself}
             data-role="cancel-upload"
             phx-click="cancel-upload"
             phx-value-ref={entry.ref}
@@ -82,7 +90,6 @@
         <progress value={entry.progress} max="100"><%= entry.progress %>%</progress>
 
         <.live_img_preview data-role="image-preview" entry={entry} class="rounded-md" />
-        
       </figure>
     </section>
 
