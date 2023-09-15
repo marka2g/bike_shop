@@ -43,3 +43,5 @@ npm-debug.log
 .vscode/*
 
 .dev.env
+
+/priv/static/uploads/*
