@@ -65,6 +65,9 @@ config :bike_shop, BikeShopWeb.Endpoint,
 # Enable dev routes for dashboard and mailbox
 config :bike_shop, dev_routes: true
 
+# https://github.com/BlakeWilliams/envy/issues/19
+# config :bike_shop, use_dot_env: true
+
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
 

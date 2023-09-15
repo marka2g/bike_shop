@@ -7,7 +7,7 @@ bikes =
       Bikes.create_bike(%{
         name: Faker.Superhero.descriptor(),
         description: Faker.Superhero.name(),
-        image_url: "bike_#{1..25 |> Enum.random()}.jpg",
+        image_url: "/images/bikes/bike_#{1..25 |> Enum.random()}.jpg",
         price: :rand.uniform(100_000)
       })
 

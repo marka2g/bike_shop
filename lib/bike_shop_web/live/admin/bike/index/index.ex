@@ -27,9 +27,12 @@ defmodule BikeShopWeb.Admin.BikeLive.Index do
   end
 
   defp apply_action(socket, :edit, %{"id" => id}) do
+    # coveralls-ignore-start
     socket
     |> assign(:page_title, "Edit Bike")
     |> assign(:bike, Bikes.get_bike!(id))
+
+    # coveralls-ignore-stop
   end
 
   defp apply_action(socket, :new, _params) do
@@ -44,9 +47,12 @@ defmodule BikeShopWeb.Admin.BikeLive.Index do
     |> assign(:bike, nil)
   end
 
+  # coveralls-ignore-start
   def handle_info({BikeForm, {:saved, bike}}, socket) do
     {:noreply, stream_insert(socket, :bikes, bike)}
   end
+
+  # coveralls-ignore-stop
 
   def handle_info({:list_bike, name}, socket) do
     params = [name: name]

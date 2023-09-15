@@ -36,7 +36,12 @@ npm-debug.log
 /assets/node_modules/
 
 **/.DS_Store
+/scratches/
 .scratch.ex
 .notes.md
 
 .vscode/*
+
+.dev.env
+
+/priv/static/uploads/*
