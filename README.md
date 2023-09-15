@@ -13,8 +13,8 @@ __Demo BikeShop Built with Phoenix LiveView__
 
 ## ToDo
 
-- [] cart icon quantity - `handle_info` update cart isn't working.  may need pub/sub
-- [] deal with `#coveralls-ignore-start` and `stops`
+- [ ] cart icon quantity - `handle_info` update cart isn't working.  may need pub/sub
+- [ ] deal with `#coveralls-ignore-start` and `stops`
 
 
 ## The UI
