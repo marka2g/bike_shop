@@ -23,6 +23,9 @@ config :bike_shop, BikeShopWeb.Endpoint,
   secret_key_base: "35dQ8mjUakx/20CCdrvDXtUDJdgvZ2Am4v/NCIzMT0xEi/oTClWHFAoDIqrpJ4to",
   server: false
 
+# config :bike_shop, :public_uploads_path, "/uploads/test"
+config :bike_shop, :uploads_dir, "priv/static/uploads/test/"
+
 # In test we don't send emails.
 config :bike_shop, BikeShop.Mailer, adapter: Swoosh.Adapters.Test
 

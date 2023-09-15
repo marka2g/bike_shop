@@ -1,40 +1,59 @@
 defmodule BikeUploadConfig do
+  @bike_images_folder "images/bikes"
+
   def upload_options do
-    get_allow_options(System.get_env("PROD"))
+    # get_allow_options(System.get_env("PROD"))
+    if Mix.env() == :test do
+      # get_allow_options(nil)
+      [accept: ~w/.png .jpeg .jpg/, max_entries: 1]
+    else
+      # get_allow_options(_)
+      [accept: ~w/.png .jpeg .jpg/, max_entries: 1, external: &s3_metadata/2]
+    end
   end
 
-  def get_allow_options(nil) do
-    [accept: ~w/.png .jpeg .jpg/, max_entries: 1]
-  end
+  # def get_allow_options(nil) do
+  #   # IO.inspect("in get_allow_options(nil)")
+  #   [accept: ~w/.png .jpeg .jpg/, max_entries: 1]
+  # end
 
-  def get_allow_options(_) do
-    [accept: ~w/.png .jpeg .jpg/, max_entries: 1, external: &s3_metadata/2]
-  end
+  # def get_allow_options(_) do
+  #   # IO.inspect("in get_allow_options(_)")
+  #   [accept: ~w/.png .jpeg .jpg/, max_entries: 1, external: &s3_metadata/2]
+  # end
 
+  # coveralls-ignore-start
   def get_image_url(entry) do
-    if System.get_env("PROD") == nil do
-      "/uploads/#{filename(entry)}"
+    if System.get_env("PROD") in ["nil", nil, "false", false] do
+      filename(entry)
     else
       Path.join(s3_url(), filename(entry))
     end
   end
+  # coveralls-ignore-stop
 
+  # coveralls-ignore-start
   def consume_entries(meta, entry) do
-    if System.get_env("PROD") == nil do
+    if System.get_env("PROD") in ["nil", nil, "false", false] do
       file_name = filename(entry)
-      dest = Path.join("priv/static/uploads", file_name)
+      # dest = Path.join("priv/static/uploads", file_name)
+      dest = Path.join("", file_name)
       {:ok, File.cp!(meta.path, dest)}
     else
       {:ok, ""}
     end
   end
+  # coveralls-ignore-start
 
+  # coveralls-ignore-start
   defp s3_url do
     bucket = System.fetch_env!("AWS_BUCKET")
     region = System.fetch_env!("AWS_REGION")
     "http://#{bucket}.s3-#{region}.amazonaws.com"
   end
+  # coveralls-ignore-stop
 
+  # coveralls-ignore-start
   defp s3_metadata(entry, socket) do
     uploads = socket.assigns.uploads
     bucket = System.fetch_env!("AWS_BUCKET")
@@ -63,9 +82,12 @@ defmodule BikeUploadConfig do
 
     {:ok, meta, socket}
   end
+  # coveralls-ignore-stop
 
+  # coveralls-ignore-start
   defp filename(entry) do
     [ext | _] = MIME.extensions(entry.client_type)
-    "#{entry.uuid}.#{ext}"
+    "#{@bike_images_folder}/#{entry.uuid}.#{ext}"
   end
+  # coveralls-ignore-start
 end

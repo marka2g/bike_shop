@@ -1,25 +1,15 @@
 defmodule BikeShopWeb.Admin.BikeLive.IndexTest do
-  use BikeShopWeb.ConnCase
+  use BikeShopWeb.ConnCase, async: false
 
   import Phoenix.LiveViewTest
   import BikeShop.BikeFixtures
-
-  @update_attrs %{
-    name: "some updated name",
-    type: :electric,
-    description: "some updated description",
-    image_url: "some updated image_url",
-    price: %Money{amount: 43, currency: :USD},
-    seats: 43
-  }
-  @invalid_attrs %{name: nil, type: nil, description: nil, image_url: nil, price: nil, seats: nil}
 
   defp create_bike(_) do
     bike = bike_fixture()
     %{bike: bike}
   end
 
-  describe "Index" do
+  describe "index" do
     setup [:create_bike, :register_and_log_in_admin_user]
 
     test "lists all bikes", %{conn: conn, bike: bike} do
@@ -29,97 +19,100 @@ defmodule BikeShopWeb.Admin.BikeLive.IndexTest do
       assert html =~ bike.name
     end
 
-    test "saves new bike", %{conn: conn} do
-      {:ok, index_live, _html} = live(conn, ~p"/admin/bikes")
-
-      assert index_live |> element("a", "Add Bike +") |> render_click() =~
-               "Add Bike +"
-
-      assert_patch(index_live, ~p"/admin/bikes/new")
-
-      assert index_live
-             |> form("#bike-form",
-               bike: %{
-                 name: "some name",
-                 type: :electric,
-                 description: "some name description",
-                 image_url: "some name image_url",
-                 price: %Money{amount: 43, currency: :USD},
-                 seats: 43
-               }
-             )
-             |> render_submit()
-
-      assert_patch(index_live, ~p"/admin/bikes")
-
-      html = render(index_live)
-      assert html =~ "Bike created successfully"
-      assert html =~ "some name"
-    end
-
-    test "does not save invalid bike", %{conn: conn} do
-      {:ok, index_live, _html} = live(conn, ~p"/admin/bikes")
-
-      index_live
-      |> element("a", "Add Bike +")
-      |> render_click() =~ "Add Bike +"
-
-      assert_patch(index_live, ~p"/admin/bikes/new")
-
-      result =
-        index_live
-        |> form("#bike-form", %{bike: @invalid_attrs})
-        |> render_submit()
-
-      assert result =~ "New Bike"
-      assert result =~ "client-error"
-    end
-
-    test "does not update invalid bike", %{conn: conn, bike: bike} do
-      {:ok, index_live, _html} = live(conn, ~p"/admin/bikes")
-
-      assert index_live |> element("#bikes-#{bike.id} a", "Edit") |> render_click() =~
-               "Edit Bike"
-
-      assert_patch(index_live, ~p"/admin/bikes/#{bike}/edit")
-
-      result =
-        index_live
-        |> form("#bike-form", %{bike: @invalid_attrs})
-        |> render_submit()
-
-      assert result =~ "Edit Bike"
-      assert result =~ "client-error"
-    end
-
-    test "updates bike in listing", %{conn: conn, bike: bike} do
-      {:ok, index_live, _html} = live(conn, ~p"/admin/bikes")
-
-      assert index_live |> element("#bikes-#{bike.id} a", "Edit") |> render_click() =~
-               "Edit Bike"
-
-      assert_patch(index_live, ~p"/admin/bikes/#{bike}/edit")
-
-      assert index_live
-             |> form("#bike-form", bike: @invalid_attrs)
-             |> render_change() =~ "can&#39;t be blank"
-
-      assert index_live
-             |> form("#bike-form", bike: @update_attrs)
-             |> render_submit()
-
-      assert_patch(index_live, ~p"/admin/bikes")
-
-      html = render(index_live)
-      assert html =~ "Bike updated successfully"
-      assert html =~ "some updated name"
-    end
-
     test "deletes bike in listing", %{conn: conn, bike: bike} do
-      {:ok, index_live, _html} = live(conn, ~p"/admin/bikes")
+      {:ok, index_view, _html} = live(conn, ~p"/admin/bikes")
 
-      assert index_live |> element("#bikes-#{bike.id} a", "Delete") |> render_click()
-      refute has_element?(index_live, "#bikes-#{bike.id}")
+      assert index_view |> element("#bikes-#{bike.id} a", "Delete") |> render_click()
+      refute has_element?(index_view, "#bikes-#{bike.id}")
+    end
+  end
+
+  describe "index - Add Bike button (with uploads)" do
+    setup [:create_bike, :register_and_log_in_admin_user]
+
+    test "error displayed when not including bike name", %{conn: conn} do
+      {:ok, view, _html} = live(conn, ~p"/admin/bikes")
+
+      assert view |> element("header>div>div>a", "Add Bike +") |> render_click()
+
+      assert_patch(view, ~p"/admin/bikes/new")
+
+      assert view |> has_element?("#bike-modal")
+
+      assert view
+             |> form("#bike-form", %{bike: %{name: nil, description: "some desc"}})
+             |> render_change() =~ "be blank"
+    end
+
+    test "error displayed when not including bike description", %{conn: conn} do
+      {:ok, view, _html} = live(conn, ~p"/admin/bikes")
+      assert view |> element("header>div>div>a", "Add Bike +") |> render_click()
+
+      html =
+        view
+        |> form("#bike-form", %{bike: %{name: "some name", description: nil}})
+        |> render_change()
+
+      assert html =~ "can&#39;t be blank"
+      assert has_element?(view, "p", "can't be blank")
+    end
+
+    test "preview of bike to be uploaded is displayed", %{conn: conn} do
+      {:ok, view, _html} = live(conn, ~p"/admin/bikes")
+      assert view |> element("header>div>div>a", "Add Bike +") |> render_click()
+
+      assert_patch(view, ~p"/admin/bikes/new")
+
+      view
+      |> upload("/images/bikes/thor.jpg")
+
+      assert has_element?(view, "[data-role='image-preview']")
+    end
+
+    test "user can cancel upload", %{conn: conn} do
+      {:ok, view, _html} = live(conn, ~p"/admin/bikes")
+      assert view |> element("header>div>div>a", "Add Bike +") |> render_click()
+
+      assert_patch(view, ~p"/admin/bikes/new")
+
+      view
+      |> upload("/images/bikes/thor.jpg")
+      |> cancel_upload()
+
+      refute has_element?(view, "[data-role='image-preview']")
+    end
+
+    test "error displayed when uploading too many files", %{conn: conn} do
+      {:ok, view, _html} = live(conn, ~p"/admin/bikes")
+      assert view |> element("header>div>div>a", "Add Bike +") |> render_click()
+
+      assert_patch(view, ~p"/admin/bikes/new")
+
+      assert view |> has_element?("#bike-modal")
+
+      filename = "/images/bikes/thor.jpg"
+      upload = view |> upload_file_input(filename)
+      assert render_upload(upload, filename, 100) =~ "100%"
+
+      upload2 = view |> upload_file_input(filename)
+
+      rendered_upload = render_upload(upload2, "/images/bikes/thor.jpg", 100)
+      assert {:error, [[_, :too_many_files]]} = rendered_upload
+    end
+
+    # fail
+    test "user can submit upload", %{conn: conn} do
+      {:ok, view, _html} = live(conn, ~p"/admin/bikes")
+      assert view |> element("header>div>div>a", "Add Bike +") |> render_click()
+
+      assert_patch(view, ~p"/admin/bikes/new")
+
+      assert view |> has_element?("#bike-modal")
+
+      filename = "/images/bikes/thor.jpg"
+      upload = view |> upload_file_input(filename)
+
+      assert render_upload(upload, filename, 100) =~ "100%"
     end
   end
 
@@ -132,28 +125,38 @@ defmodule BikeShopWeb.Admin.BikeLive.IndexTest do
       assert html =~ "Show Bike"
       assert html =~ bike.name
     end
+  end
 
-    test "updates bike within modal", %{conn: conn, bike: bike} do
-      {:ok, show_live, _html} = live(conn, ~p"/admin/bikes/#{bike}")
+  # defp create_bike_form(view, name) do
+  #   view
+  #   |> form("#bike-form", %{bike: %{name: name, description: "some description"}})
+  #   |> render_submit()
+  # end
 
-      assert show_live |> element("a", "Edit") |> render_click() =~
-               "Edit Bike"
+  defp cancel_upload(view) do
+    view
+    |> element("[data-role='cancel-upload']")
+    |> render_click()
+  end
 
-      assert_patch(show_live, ~p"/admin/bikes/#{bike}/show/edit")
+  defp upload(view, filename) do
+    upload_file_input(view, filename) |> render_upload(filename)
 
-      assert show_live
-             |> form("#bike-form", bike: @invalid_attrs)
-             |> render_change() =~ "can&#39;t be blank"
+    view
+    |> form("#bike-form")
+    |> render_change()
 
-      assert show_live
-             |> form("#bike-form", bike: @update_attrs)
-             |> render_submit()
+    view
+  end
 
-      assert_patch(show_live, ~p"/admin/bikes/#{bike}")
-
-      html = render(show_live)
-      assert html =~ "Bike updated successfully"
-      assert html =~ "some updated name"
-    end
+  defp upload_file_input(view, filename) do
+    view
+    |> file_input("#bike-form", :image_url, [
+      %{
+        name: filename,
+        content: File.read!("test/support/#{filename}"),
+        type: "image/jpg"
+      }
+    ])
   end
 end

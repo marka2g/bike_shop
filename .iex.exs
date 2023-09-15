@@ -28,6 +28,7 @@ alias BikeShop.Bikes
 alias BikeShop.Carts
 alias BikeShop.Carts.Core.HandleCarts
 alias BikeShop.Carts.Data.Cart
-alias BikeShop.Carts.Server.CartSessionServer
-alias BikeShop.Orders
+# alias BikeShop.Orders
+alias BikeShop.Repo
 alias BikeShopWeb.Middleware.CartSession
+# alias BikeShop.Carts.Server.CartSessionServer

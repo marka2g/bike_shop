@@ -23,39 +23,68 @@
       options={Ecto.Enum.values(BikeShop.Bikes.Bike, :type)}
     />
 
-    <div class="container" phx-drop-target={@uploads.image_url.ref}>
+    <div :if={@action == :edit}>
+      <.header>
+        Bike's Current Image
+      </.header>
+      <article
+        :if={@bike}
+        class="flex items-center justify-between"
+      >
+        <figure class="flex flex-col items-center justify-between p-4 rounded-md bg-slate-200">
+          <img src={@bike.image_url} alt="" class="w-16 h-16 rounded-md" data-role="edit-image-preview">
+          <figcaption class="text-purple-800"><%= @bike.name %></figcaption>
+        </figure>
+        <%!-- <button 
+          phx-target={@myself} 
+          phx-value-ref={entry.ref}
+          phx-click="remove-current-image"
+          data-role="remove-current-image"
+        >
+          <.icon name="hero-x-mark" class="w-5 h-5 text-red-500 stroke-current" />
+        </button> --%>
+      </article>
+    </div>
+
+    <.header>
+      Add Bike Image(s)
+    </.header>
+    <div class="container h-48 p-4 border-2 border-purple-600 border-dashed rounded-lg" phx-drop-target={@uploads.image_url.ref}>
       <.live_file_input upload={@uploads.image_url} /> or drag and drop
     </div>
 
     <div>
-      Add up to <%= @uploads.image_url.max_entries %> photos
+      Add up to <%= @uploads.image_url.max_entries %> images
       (max <%= trunc(@uploads.image_url.max_file_size / 1_000_000) %> mb each)
     </div>
 
-    <article
-      :for={entry <- @uploads.image_url.entries}
-      class="flex items-center justify-between"
-      id={entry.ref}
-    >
-      <figure class="flex flex-col items-center justify-between p-4 bg-purple-100 rounded-md">
-        <.live_img_preview entry={entry} class="w-16 h-16" />
-        <figcaption class="text-purple-800"><%= entry.client_name %></figcaption>
-      </figure>
+    <section :if={!Enum.empty?(@uploads.image_url.entries)}>
+      <h2 class="text-xl font-bold text-center">Photo Previews</h2>
 
-      <div class="flex flex-col items-center w-full p-8">
-        <p
-          :for={err <- upload_errors(@uploads.image_url, entry)}
-          class="flex flex-col text-red-500"
-        >
-          <%= humanize(err) %>
-        </p>
+      <p :for={err <- upload_errors(@uploads.image_url)} class="font-semibold text-red-500">
+        <%= humanize(err) %>
+      </p>
+      
+      <figure :for={entry <- @uploads.image_url.entries} class="p-4 mb-2 space-y-2 rounded-md bg-slate-200">
+        <div class="text-right">
+          <button
+            type="button"
+            phx-target={@myself} 
+            data-role="cancel-upload"
+            phx-click="cancel-upload"
+            phx-value-ref={entry.ref}
+            aria-label="cancel"
+          >
+            <.icon name="hero-x-mark" class="w-6 h-6 text-red-500 stroke-current" />
+          </button>
+        </div>
+
         <progress value={entry.progress} max="100"><%= entry.progress %>%</progress>
-      </div>
 
-      <button phx-click="cancel" phx-target={@myself} phx-value-ref={entry.ref}>
-        <.icon name="hero-x-mark" class="w-5 h-5 text-red-500 stroke-current" />
-      </button>
-    </article>
+        <.live_img_preview data-role="image-preview" entry={entry} class="rounded-md" />
+        
+      </figure>
+    </section>
 
     <:actions>
       <button

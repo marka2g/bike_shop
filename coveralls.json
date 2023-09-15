@@ -11,7 +11,8 @@
     "lib/bike_shop/repo.ex",
     "lib/bike_shop/orders.ex",
     "lib/bike_shop_web/controllers/error_html",
-    "lib/bike_shop_web/components/layouts/top_nav_component.ex"
+    "lib/bike_shop_web/components/layouts/top_nav_component.ex",
+    "lib/bike_shop_web/live/admin/bike/bike_form/simple_s3_upload.ex"
   ],
   "terminal_options": {
     "file_column_width": 55

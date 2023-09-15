@@ -14,7 +14,6 @@ defmodule BikeShop.BikeFixtures do
         name: "Dummy Bike",
         type: :pedal,
         description: "Dummy Bike description",
-        image_url: "bike_1.jpg",
         price: 42,
         seats: 1
       })

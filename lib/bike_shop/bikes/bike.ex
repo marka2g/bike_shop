@@ -11,14 +11,14 @@ defmodule BikeShop.Bikes.Bike do
     field :type, Ecto.Enum, values: @bike_types, default: :pedal
     field :description, :string
     field :image_url, :string
-    field :price, Money.Ecto.Amount.Type
-    field :seats, :integer
+    field :price, Money.Ecto.Amount.Type, default: 1000
+    field :seats, :integer, default: 1
 
     timestamps()
   end
 
-  @required_fields ~w(name price)a
-  @optional_fields ~w(description seats type image_url)a
+  @required_fields ~w(name description)a
+  @optional_fields ~w(price description seats type image_url)a
 
   @doc false
   def changeset(bike, attrs) do

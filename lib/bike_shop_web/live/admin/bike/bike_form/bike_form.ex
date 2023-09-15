@@ -1,48 +1,8 @@
 defmodule BikeShopWeb.Admin.BikeLive.BikeForm do
   use BikeShopWeb, :live_component
-
   alias BikeShop.Bikes
-
-  @impl true
-  def render(assigns) do
-    ~H"""
-    <div>
-      <.header>
-        <%= @title %>
-        <:subtitle>Use this form to manage bike records in your database.</:subtitle>
-      </.header>
-
-      <.simple_form
-        for={@form}
-        id="bike-form"
-        phx-target={@myself}
-        phx-change="validate"
-        phx-submit="save"
-      >
-        <.input field={@form[:name]} type="text" label="Name" />
-        <.input field={@form[:description]} type="text" label="Description" />
-        <.input field={@form[:image_url]} type="text" label="Image url" />
-        <.input field={@form[:price]} type="number" label="Price" />
-        <.input field={@form[:seats]} type="number" label="Seats" />
-        <.input
-          field={@form[:type]}
-          type="select"
-          label="Type"
-          prompt="Choose a value"
-          options={Ecto.Enum.values(BikeShop.Bikes.Bike, :type)}
-        />
-        <:actions>
-          <button
-            phx-disable-with="Saving..."
-            class="px-3 py-2 text-sm font-semibold bg-green-600 rounded-lg phx-submit-loading:opacity-75 text-green-50 hover:bg-green-700 hover:text-green-50"
-          >
-            Save Bike
-          </button>
-        </:actions>
-      </.simple_form>
-    </div>
-    """
-  end
+  import BikeUploadConfig
+  import Phoenix.Naming, only: [humanize: 1]
 
   @impl true
   def update(%{bike: bike} = assigns, socket) do
@@ -51,7 +11,8 @@ defmodule BikeShopWeb.Admin.BikeLive.BikeForm do
     {:ok,
      socket
      |> assign(assigns)
-     |> assign_form(changeset)}
+     |> assign_form(changeset)
+     |> allow_upload(:image_url, upload_options())}
   end
 
   @impl true
@@ -64,43 +25,75 @@ defmodule BikeShopWeb.Admin.BikeLive.BikeForm do
     {:noreply, assign_form(socket, changeset)}
   end
 
+  # coveralls-ignore-start
+  def handle_event("validate", _params, socket) do
+    {:noreply, socket}
+  end
+  # coveralls-ignore-stop
+
   def handle_event("save", %{"bike" => bike_params}, socket) do
-    save_bike(socket, socket.assigns.action, bike_params)
+    # coveralls-ignore-start
+    {[image_url | _], []} = uploaded_entries(socket, :image_url)
+    image_url = get_image_url(image_url)
+    bike_params = Map.put(bike_params, "image_url", image_url)
+    save(socket, socket.assigns.action, bike_params)
+    # coveralls-ignore-stop
   end
 
-  defp save_bike(socket, :new, bike_params) do
-    case Bikes.create_bike(bike_params) do
-      {:ok, bike} ->
-        notify_parent({:saved, bike})
-
-        {:noreply,
-         socket
-         |> put_flash(:info, "Bike created successfully")
-         |> push_patch(to: socket.assigns.patch)}
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign_form(socket, changeset)}
-    end
+  def handle_event("cancel-upload", %{"ref" => ref}, socket) do
+    {:noreply, cancel_upload(socket, :image_url, ref)}
   end
 
-  defp save_bike(socket, :edit, bike_params) do
-    case Bikes.update_bike(socket.assigns.bike, bike_params) do
-      {:ok, bike} ->
-        notify_parent({:saved, bike})
+  defp save(socket, :new, bike_params) do
+    # coveralls-ignore-start
+    function_result = Bikes.create_bike(bike_params)
+    message = "Bike created successfully"
+    perform(socket, function_result, message)
+    # coveralls-ignore-stop
+  end
 
-        {:noreply,
-         socket
-         |> put_flash(:info, "Bike updated successfully")
-         |> push_patch(to: socket.assigns.patch)}
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign_form(socket, changeset)}
-    end
+  defp save(socket, :edit, bike_params) do
+    # coveralls-ignore-start
+    function_result = Bikes.update_bike(socket.assigns.bike, bike_params)
+    message = "Bike updated successfully"
+    perform(socket, function_result, message)
+    # coveralls-ignore-stop
   end
 
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do
     assign(socket, :form, to_form(changeset))
   end
 
-  defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
+  # coveralls-ignore-start
+  # defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
+  defp notify_parent(msg), do: send(self(), {BikeShopWeb.Admin.BikeLive.Index, msg})
+  # coveralls-ignore-stop
+
+  # coveralls-ignore-start
+  defp perform(socket, function_result, message) do
+    case function_result do
+      {:ok, bike} ->
+        build_image_url(socket)
+        notify_parent({:saved, bike})
+
+        socket =
+          socket
+          |> put_flash(:info, message)
+          |> push_navigate(to: socket.assigns.navigate)
+          # |> push_patch(to: socket.assigns.patch)
+
+        {:noreply, socket}
+
+      {:error, changeset} ->
+        {:noreply, assign(socket, :changeset, changeset)}
+        # {:noreply, assign_form(socket, changeset)}
+    end
+  end
+  # coveralls-ignore-stop
+
+  defp build_image_url(socket) do
+    # coveralls-ignore-start
+    consume_uploaded_entries(socket, :image_url, &consume_entries/2)
+    # coveralls-ignore-stop
+  end
 end

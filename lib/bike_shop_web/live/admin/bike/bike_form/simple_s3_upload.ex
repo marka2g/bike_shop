@@ -2,6 +2,9 @@ defmodule SimpleS3Upload do
   @moduledoc """
   Dependency-free S3 Form Upload using HTTP POST sigv4
   https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-post-example.html
+
+  [gist from here](https://gist.github.com/chrismccord/37862f1f8b1f5148644b75d20d1cb073)
+
   """
 
   @doc """

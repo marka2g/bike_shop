@@ -27,6 +27,7 @@ defmodule BikeShop.Bikes do
         where(query, [q], ilike(q.name, ^name))
     end)
     |> Repo.all()
+    |> Enum.reverse()
   end
 
   def list_suggest_names(name) do

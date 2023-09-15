@@ -7,7 +7,7 @@ defmodule BikeShopWeb.Cart.Details.Item do
     <div id={@id} data-role="item" class="flex items-center p-2 my-8 shadow-lg hover:bg-neutral-100">
       <img
         data-role="item-image"
-        src={~p"/images/#{@item.item.image_url}"}
+        src={@item.item.image_url}
         alt=""
         class="w-16 h-16 rounded-full"
       />
