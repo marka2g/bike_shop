@@ -15,3 +15,24 @@ __Demo BikeShop Built with Phoenix LiveView__
 
 -[] cart icon quantity - `handle_info` update cart isn't working.  may need pub/sub
 -[] deal with `#coveralls-ignore-start` and `stops`
+
+
+## The UI
+
+### Customer Bikes
+![bikes index](readme_images/bikes_index.png)
+
+### Admin Bikes
+![bikes index](readme_images/admin_bikes_index.png)
+
+### Customer Orders - Not Started
+![bikes index](readme_images/customer_orders_1.png)
+
+### Admin Orders - Not Started
+![bikes index](readme_images/admin_orders_1.png)
+
+### Customer Orders - Preparing
+![bikes index](readme_images/customer_orders_2.png)
+
+### Admin Orders - Preparing
+![bikes index](readme_images/admin_orders_2.png)
