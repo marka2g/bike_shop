@@ -3,7 +3,8 @@ defmodule BikeUploadConfig do
 
   def upload_options do
     # get_allow_options(System.get_env("PROD"))
-    if Mix.env() == :test do
+    # if Mix.env() == :test do
+    if System.get_env("TEST") do
       # get_allow_options(nil)
       [accept: ~w/.png .jpeg .jpg/, max_entries: 1]
     else
@@ -24,18 +25,19 @@ defmodule BikeUploadConfig do
 
   # coveralls-ignore-start
   def get_image_url(entry) do
-    if System.get_env("PROD") in ["nil", nil, "false", false] do
+    # if System.get_env("PROD") in ["nil", nil, "false", false] do
+    if System.get_env("TEST") do
       filename(entry)
     else
       Path.join(s3_url(), filename(entry))
     end
   end
-
   # coveralls-ignore-stop
 
   # coveralls-ignore-start
   def consume_entries(meta, entry) do
-    if System.get_env("PROD") in ["nil", nil, "false", false] do
+    # if System.get_env("PROD") in ["nil", nil, "false", false] do
+    if System.get_env("TEST") do
       file_name = filename(entry)
       # dest = Path.join("priv/static/uploads", file_name)
       dest = Path.join("", file_name)
@@ -44,7 +46,6 @@ defmodule BikeUploadConfig do
       {:ok, ""}
     end
   end
-
   # coveralls-ignore-start
 
   # coveralls-ignore-start
