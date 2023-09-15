@@ -32,6 +32,7 @@ defmodule BikeUploadConfig do
       Path.join(s3_url(), filename(entry))
     end
   end
+
   # coveralls-ignore-stop
 
   # coveralls-ignore-start
@@ -46,6 +47,7 @@ defmodule BikeUploadConfig do
       {:ok, ""}
     end
   end
+
   # coveralls-ignore-start
 
   # coveralls-ignore-start
