@@ -100,7 +100,6 @@ defmodule BikeShopWeb.Admin.BikeLive.IndexTest do
       assert {:error, [[_, :too_many_files]]} = rendered_upload
     end
 
-    # fail
     test "user can submit upload", %{conn: conn} do
       {:ok, view, _html} = live(conn, ~p"/admin/bikes")
       assert view |> element("header>div>div>a", "Add Bike +") |> render_click()
