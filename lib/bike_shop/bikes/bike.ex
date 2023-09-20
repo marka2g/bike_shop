@@ -27,3 +27,25 @@ defmodule BikeShop.Bikes.Bike do
     |> validate_required(@required_fields)
   end
 end
+
+# defimpl Inspect, for: BikeShop.Bikes.Bike do
+#   def inspect(bike, _opts) do
+#     """
+#     ----------|---------------------
+#       Name     :  #{bike.name}
+#     -----------|---------------------
+#       Id       :  #{bike.id}
+#     -----------|---------------------
+#       Type     :  #{bike.type}
+#     -----------|---------------------
+#       #OfSeats :  #{bike.seats}
+#     -----------|---------------------
+#       Desc     :  #{bike.description}
+#     -----------|---------------------
+#       ImgUrl   :  #{bike.image_url}
+#     -----------|---------------------
+#       Price    :  #{bike.price}
+#     -----------|---------------------
+#     """
+#   end
+# end

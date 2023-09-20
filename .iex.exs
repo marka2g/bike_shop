@@ -25,6 +25,7 @@ import Ecto.Query, warn: false
 
 alias BikeShop.Accounts
 alias BikeShop.Bikes
+alias BikeShop.Bikes.Bike
 alias BikeShop.Carts
 alias BikeShop.Carts.Core.HandleCarts
 alias BikeShop.Carts.Data.Cart
