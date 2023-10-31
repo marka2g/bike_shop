@@ -10,13 +10,6 @@ __Demo BikeShop Built with Phoenix LiveView__
 >4. [mix_test_watch](https://github.com/lpil/mix-test.watch) - continuous test runner
 >5. [libcluster](https://github.com/bitwalker/libcluster) - provides a mechanism for automatically forming clusters of Erlang nodes
 
-
-## ToDo
-
-- [ ] cart icon quantity - `handle_info` update cart isn't working.  may need pub/sub
-- [ ] deal with `#coveralls-ignore-start` and `stops`
-
-
 ## The UI
 
 ### Customer Bikes
@@ -36,3 +29,12 @@ __Demo BikeShop Built with Phoenix LiveView__
 
 ### Admin Orders - Preparing
 ![bikes index](readme_images/admin_orders_2.png)
+
+
+## Data Relationships
+```mermaid
+graph TB;
+  Order-. has_many .->Item;
+  Order-. belongs_to .->User;
+  Item-. belongs_to .->Bike;
+```
