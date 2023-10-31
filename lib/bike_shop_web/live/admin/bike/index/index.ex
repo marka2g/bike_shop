@@ -118,7 +118,7 @@ defmodule BikeShopWeb.Admin.BikeLive.Index do
           name="name"
           value={@name}
           placeholder="Search by Name"
-          class="py-4 pl-10 pr-4 text-sm leading-tight border rounded-md text-neutral-800 placeholder-neutral-500 border-neutral-300"
+          class="py-4 pl-10 pr-4 text-sm leading-tight border rounded-md text-neutral-800 placeholder-neutral-500 border-neutral-300 ring-1 ring-inset"
         />
       </div>
     </form>
