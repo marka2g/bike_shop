@@ -11,12 +11,6 @@ __Demo BikeShop Built with Phoenix LiveView__
 >5. [libcluster](https://github.com/bitwalker/libcluster) - provides a mechanism for automatically forming clusters of Erlang nodes
 
 
-## ToDo
-
-- [ ] cart icon quantity - `handle_info` update cart isn't working.  may need pub/sub
-- [ ] deal with `#coveralls-ignore-start` and `stops`
-
-
 ## The UI
 
 ### Customer Bikes
